@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desafio 14 Dias de Hábitos Saudáveis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF8F2;
+    --paper:#F4EFE4;
+    --line:#DCD3C0;
+    --ink:#241F19;
+    --ink-soft:#57503F;
+    --sage:#6E9784;
+    --sage-deep:#3C5548;
+    --sage-pale:#DCE7DF;
+    --honey:#C1832F;
+    --honey-deep:#93611F;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+  .wrap{max-width:640px; margin:0 auto; padding:0 24px;}
+  h1,h2,h3{font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em; color:var(--sage-deep);}
+  a{color:inherit;}
+
+  /* ---- Tracker signature element ---- */
+  .tracker{display:flex; gap:6px; flex-wrap:wrap; justify-content:center;}
+  .tracker .box{
+    width:28px; height:28px; border-radius:6px; border:1.6px solid var(--sage);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Space Mono', monospace; font-size:11px; color:var(--sage-deep);
+    background:var(--cream); flex-shrink:0;
+    opacity:0; transform:translateY(6px);
+    animation:pop 0.4s ease forwards;
+  }
+  .tracker .box.checked{background:var(--sage); border-color:var(--sage); color:var(--cream); position:relative;}
+  .tracker .box.checked::after{content:"✓"; font-family:'Work Sans',sans-serif; font-weight:700; font-size:13px;}
+  @keyframes pop{ to{ opacity:1; transform:translateY(0); } }
+
+  /* ---- Header / hero ---- */
+  header{padding:56px 0 40px; text-align:center;}
+  .eyebrow{
+    font-family:'Space Mono', monospace; text-transform:uppercase; font-size:12px;
+    letter-spacing:0.12em; color:var(--honey-deep); margin-bottom:18px;
+  }
+  h1{font-size:clamp(30px, 6vw, 42px); line-height:1.12; margin-bottom:18px;}
+  .sub{color:var(--ink-soft); font-size:17px; max-width:480px; margin:0 auto 30px;}
+  .tracker-hero{margin:0 auto 30px; max-width:420px;}
+  .tracker-caption{font-size:13px; color:var(--ink-soft); margin-top:10px;}
+
+  .cta{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--sage-deep); color:var(--cream);
+    font-family:'Work Sans',sans-serif; font-weight:600; font-size:16px;
+    padding:16px 30px; border-radius:100px; text-decoration:none;
+    box-shadow:0 6px 0 var(--ink); transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .cta:hover{transform:translateY(2px); box-shadow:0 4px 0 var(--ink);}
+  .cta-note{font-size:13px; color:var(--ink-soft); margin-top:14px;}
+
+  /* ---- Sections ---- */
+  section{padding:44px 0;}
+  .rule{border:none; border-top:1px solid var(--line); max-width:640px; margin:0 auto;}
+
+  .quote-card{
+    background:var(--paper); border:1px solid var(--line); border-radius:14px;
+    padding:30px 26px; text-align:center; position:relative;
+  }
+  .quote-card p{font-family:'Fraunces', serif; font-style:italic; font-size:20px; color:var(--sage-deep); line-height:1.4;}
+  .quote-card span{display:block; margin-top:14px; font-size:13px; color:var(--ink-soft); font-family:'Work Sans';}
+
+  h2{font-size:clamp(22px,4vw,28px); margin-bottom:10px;}
+  .section-lead{color:var(--ink-soft); margin-bottom:28px; max-width:460px;}
+
+  .pillars{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media(max-width:480px){ .pillars{grid-template-columns:1fr;} }
+  .pillar{
+    background:var(--cream); border:1.4px solid var(--sage); border-radius:12px; padding:20px;
+  }
+  .pillar .num{font-family:'Space Mono',monospace; font-size:12px; color:var(--honey-deep); display:block; margin-bottom:8px;}
+  .pillar h3{font-family:'Work Sans'; font-weight:600; font-size:16px; color:var(--ink); margin-bottom:6px;}
+  .pillar p{font-size:14px; color:var(--ink-soft);}
+
+  .days-mini{display:flex; justify-content:center; gap:14px; margin:34px 0 8px; flex-wrap:wrap;}
+  .day-stop{text-align:center; max-width:150px;}
+  .day-stop .box{
+    width:44px; height:44px; border-radius:10px; background:var(--sage-deep); color:var(--cream);
+    display:flex; align-items:center; justify-content:center; font-family:'Fraunces'; font-size:18px;
+    margin:0 auto 10px;
+  }
+  .day-stop p{font-size:13px; color:var(--ink-soft);}
+
+  .checklist{list-style:none; max-width:460px; margin:0 auto;}
+  .checklist li{
+    display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--line); font-size:15px;
+  }
+  .checklist li:last-child{border-bottom:none;}
+  .checklist .mark{
+    width:20px; height:20px; border-radius:5px; border:1.6px solid var(--sage); flex-shrink:0; margin-top:2px;
+    display:flex; align-items:center; justify-content:center; background:var(--sage); color:var(--cream); font-size:12px;
+  }
+
+  /* ---- Price block ---- */
+  .price-block{
+    background:var(--sage-deep); color:var(--cream); border-radius:18px; padding:38px 28px; text-align:center;
+  }
+  .price-block .eyebrow{color:var(--sage-pale);}
+  .price-tag{font-family:'Fraunces'; font-size:52px; color:var(--cream); margin:6px 0 4px;}
+  .price-was{font-size:15px; color:var(--sage-pale); text-decoration:line-through; opacity:.8;}
+  .price-block .cta{background:var(--honey); box-shadow:0 6px 0 var(--honey-deep); margin-top:18px;}
+  .price-block .cta:hover{box-shadow:0 4px 0 var(--honey-deep);}
+  .guarantee{font-size:13px; color:var(--sage-pale); margin-top:18px; max-width:360px; margin-left:auto; margin-right:auto;}
+
+  footer{padding:36px 0 60px; text-align:center; font-size:13px; color:var(--ink-soft);}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="eyebrow">desafio de hábitos · 14 dias</div>
+  <h1>Você não precisa mudar sua vida inteira.<br>Só precisa começar hoje.</h1>
+  <p class="sub">Um passo pequeno por dia, durante 14 dias, pra construir uma rotina mais saudável — sem dietas malucas e sem academia 2 horas por dia.</p>
+
+  <div class="tracker-hero">
+    <div class="tracker" id="heroTracker"></div>
+    <p class="tracker-caption">assim vai ficar o seu progresso, dia após dia</p>
+  </div>
+
+  <a href="#preco" class="cta">Quero começar por R$ 19,90 →</a>
+  <p class="cta-note">PDF direto no seu WhatsApp · acesso imediato após a compra</p>
+</header>
+
+<hr class="rule">
+
+<section class="wrap">
+  <div class="quote-card">
+    <p>"Já tentei mudar tudo de uma vez umas cinco vezes. Sempre desisti lá pelo dia 3."</p>
+    <span>— provavelmente você, em algum momento</span>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>Por que 14 dias funcionam melhor que "força de vontade"</h2>
+  <p class="section-lead">Grandes mudanças não vêm de motivação — vêm de repetição. Este desafio trabalha 4 pilares, um dia de cada vez.</p>
+  <div class="pillars">
+    <div class="pillar"><span class="num">01</span><h3>Alimentação equilibrada</h3><p>Escolhas conscientes, sem cortar tudo de uma vez.</p></div>
+    <div class="pillar"><span class="num">02</span><h3>Movimento diário</h3><p>Poucos minutos por dia já mudam o jogo.</p></div>
+    <div class="pillar"><span class="num">03</span><h3>Hidratação</h3><p>A base mais simples e mais esquecida.</p></div>
+    <div class="pillar"><span class="num">04</span><h3>Mente positiva</h3><p>Pensamento saudável sustenta hábito saudável.</p></div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="wrap">
+  <h2>Como o desafio caminha</h2>
+  <p class="section-lead">Cada dia é uma tarefa simples. Sem teoria complicada, sem plano mirabolante.</p>
+  <div class="days-mini">
+    <div class="day-stop"><div class="box">1</div><p>Aumente o consumo de água</p></div>
+    <div class="day-stop"><div class="box">7</div><p>Avalie sua primeira semana</p></div>
+    <div class="day-stop"><div class="box">14</div><p>Avaliação completa + próximos passos</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>O que vem no seu PDF</h2>
+  <ul class="checklist">
+    <li><span class="mark">✓</span> Desafio guiado dia a dia, dos 14 dias completos</li>
+    <li><span class="mark">✓</span> Checklist diário pra marcar suas conquistas</li>
+    <li><span class="mark">✓</span> Os 4 pilares dos hábitos saudáveis explicados de forma simples</li>
+    <li><span class="mark">✓</span> Checklist de preparação do ambiente</li>
+    <li><span class="mark">✓</span> Espaço pra planejar os 3 hábitos que você vai manter depois</li>
+  </ul>
+</section>
+
+<hr class="rule">
+
+<section class="wrap" id="preco">
+  <div class="price-block">
+    <div class="eyebrow">acesso vitalício · 100% digital</div>
+    <div class="price-was">R$ 47,00</div>
+    <div class="price-tag">R$ 19,90</div>
+    <p style="color:var(--sage-pale); font-size:14px;">pagamento único, sem mensalidade</p>
+    <a href="#" class="cta">Começar meu desafio agora →</a>
+    <p class="guarantee">Recebe o PDF na hora, direto no seu e-mail ou WhatsApp. Pode começar hoje mesmo.</p>
+  </div>
+</section>
+
+<footer class="wrap">
+  Desafio 14 Dias de Hábitos Saudáveis — material 100% digital em PDF.
+</footer>
+
+<script>
+  // Build the 14-day tracker, first 3 boxes "checked" as a preview
+  const tracker = document.getElementById('heroTracker');
+  for(let i=1;i<=14;i++){
+    const box = document.createElement('div');
+    box.className = 'box' + (i<=3 ? ' checked' : '');
+    box.style.animationDelay = (i*0.05)+'s';
+    if(i>3) box.textContent = '';
+    tracker.appendChild(box);
+  }
+</script>
+
+</body>
+</html>
